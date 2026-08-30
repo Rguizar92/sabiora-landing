@@ -70,7 +70,7 @@
     <p class="lead">Curso en video de 15 lecciones cortas, pensado para mujeres que quieren
       entender la IA de una vez por todas. Desde tu celular, a tu paso, con guías imprimibles.</p>
 
-    <a class="btn" href="https://pay.hotmart.com/REEMPLAZAR-CHECKOUT" data-checkout data-event="cta_click_hero">Quiero mi lugar</a>
+    <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero">Quiero mi lugar</a>
     <p class="btn-note">
       <span class="price">Precio de lanzamiento 499 MXN.</span>
       Sube a 999 MXN el 15 de septiembre. Garantía de reembolso total.
@@ -187,7 +187,7 @@
       <h2>¿Es para tu mamá?</h2>
       <p>Regálale confianza, no otro aparato. Compra el curso a su nombre y recibe una tarjeta digital
         para dárselo. Ella aprende a su ritmo y tú dejas de ser soporte técnico de tiempo completo.</p>
-      <a class="btn" href="https://pay.hotmart.com/REEMPLAZAR-CHECKOUT" data-checkout="gift" data-event="cta_click_gift">Regalar el curso</a>
+      <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout="gift" data-event="cta_click_gift">Regalar el curso</a>
     </div>
   </div>
 </section>
@@ -217,7 +217,7 @@
     <h2>Compra sin riesgo</h2>
     <p>Si el curso no es para ti, te devolvemos el 100 por ciento, sin preguntas, hasta 14 días después
       de la entrega del 15 de septiembre. Escribes un correo y listo.</p>
-    <a class="btn" href="https://pay.hotmart.com/REEMPLAZAR-CHECKOUT" data-checkout data-event="cta_click_hero">Quiero mi lugar</a>
+    <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero">Quiero mi lugar</a>
     <p class="btn-note"><span class="price">Precio de lanzamiento 499 MXN.</span> Sube a 999 MXN el 15 de septiembre.</p>
   </div>
 </section>
@@ -262,7 +262,8 @@
     <h2>¿Todavía no te decides?</h2>
     <p>Déjanos tu correo y te mandamos gratis la Guía de Seguridad Digital, una página con las 5 reglas
       para no caer en fraudes.</p>
-    <!-- PRE-LAUNCH: point action/onsubmit at the real Brevo or MailerLite endpoint. -->
+    <!-- Wired 2026-08-29 to the Brevo form "Guia Seguridad Digital capture",
+         list "Sabiora non-buyers" (#3). The endpoint lives in the JS handler below. -->
     <form class="capture" id="capture-form" novalidate>
       <label for="email">Tu correo</label>
       <input type="email" id="email" name="email" autocomplete="email"
@@ -290,6 +291,7 @@
       <li>Fechas y contenidos del programa pueden ajustarse; cualquier cambio se avisa por correo a quienes ya compraron.</li>
       <li>Las lecciones usan una voz generada por computadora para la narración.</li>
     </ul>
+    <p><a href="privacidad.html">Aviso de privacidad</a> · <a href="reembolsos.html">Política de reembolso</a></p>
   </div>
 </footer>
 
@@ -298,7 +300,7 @@
      ============================================================ -->
 <div class="sticky-cta" role="complementary" aria-label="Comprar el curso">
   <span class="price">Lanzamiento<br>499 MXN</span>
-  <a class="btn" href="https://pay.hotmart.com/REEMPLAZAR-CHECKOUT" data-checkout data-event="cta_click_hero">Quiero mi lugar</a>
+  <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero">Quiero mi lugar</a>
 </div>
 
 <!-- ============================================================
@@ -309,10 +311,9 @@
   'use strict';
 
   // The real Hotmart checkout link lives in each CTA's href attribute, so the
-  // buttons work even if this script fails. Swap the placeholder there.
-  // TODO PRE-LAUNCH: replace https://pay.hotmart.com/REEMPLAZAR-CHECKOUT in every
-  // CTA href (three "Quiero mi lugar" + one "Regalar el curso") with the real link.
-  // Use a gift-specific link on the [data-checkout="gift"] button if you set one up.
+  // buttons work even if this script fails. Wired 2026-08-29 to product 8418823,
+  // offer 5m14s2xq (base price 499 MXN). The [data-checkout="gift"] button uses
+  // the same offer; point it at a gift-specific link if one is set up later.
 
   // Default campaign per the launch plan; real incoming UTMs override it.
   var DEFAULT_UTMS = { utm_campaign: 'ia55-mx' };
@@ -373,11 +374,24 @@
       }
       input.removeAttribute('aria-invalid');
       track('email_capture');
-      // TODO PRE-LAUNCH: Brevo decided 2026-08-29. Once the account exists, build
-      // the subscription form in Brevo, then point this handler (or the form's
-      // action) at that form's endpoint. Keep this page's markup and styling.
-      msg.textContent = 'Listo. Revisa tu correo, ahí va tu Guía de Seguridad Digital.';
-      form.reset();
+      // Brevo subscription endpoint, wired 2026-08-29. Form "Guia Seguridad
+      // Digital capture", list "Sabiora non-buyers" (#3). ?isAjax=1 returns
+      // JSON with CORS, same mechanism Brevo's own embed script uses.
+      var BREVO_ACTION = 'https://891b84a2.sibforms.com/serve/MUIFALqpN5MfMqknCQtdnXbXIEvG6G8ZG8spXIQLI_7czlUtHWXDeobNq63a_6yRMdoyC-ye9tJyuKu5OLjcH8RtdjWHdqhQlFywm5dVJqvTCuO993UKFl51d6LC_iZNnBnERv_dc8PP7lKKxoE1GBjFVJLGiCP8VBHwkr4I4pyAk6dy-aQIkZT2xu_bWyskr5Ar9XOgXqe20xTFoQ==';
+      var data = new FormData();
+      data.append('EMAIL', email);
+      data.append('email_address_check', '');
+      data.append('locale', 'es');
+      msg.textContent = 'Enviando…';
+      fetch(BREVO_ACTION + '?isAjax=1', { method: 'POST', body: data })
+        .then(function (res) {
+          if (!res.ok) { throw new Error('brevo ' + res.status); }
+          msg.textContent = 'Listo. Revisa tu correo, ahí va tu Guía de Seguridad Digital.';
+          form.reset();
+        })
+        .catch(function () {
+          msg.textContent = 'No se pudo enviar. Intenta de nuevo, por favor.';
+        });
     });
   }
 })();
