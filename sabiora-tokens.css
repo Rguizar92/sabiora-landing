@@ -1,0 +1,344 @@
+/* ==========================================================================
+   Sabiora Design System — v2, Memorisely-derived
+   Reusable token + component layer for every Sabiora page.
+   Source of every value: SABIORA_DesignSystem-Memorisely_20260824_v1.md
+   (20-COURSES/1-IN/00-SOURCES/). Restyled from Warm & Wise v1 on 2026-08-24,
+   the day Roberto reversed the Course 55 freeze: one system everywhere.
+
+   The 55+ floors OVERRIDE the source system and must never regress:
+   body 20px (floor is 18px on phone), tap targets 56px, nothing hidden,
+   phone-first at 390px. The spec's iteration guide agrees: on any conflict
+   with an audience's accessibility floor, the floor wins.
+
+   CONTRAST (computed against the named background, do not regress)
+   --ink    on --canvas  19.8:1   body, headings. AAA
+   --ink    on --sand    15.2:1   text on wash bands. AAA
+   --ink    on --accent-amber 13.2:1  chip labels, mark text. AAA
+   --muted  on --canvas   7.4:1   secondary copy. AAA
+   --muted  on --card     7.8:1   card meta. AAA
+   --on-ink on --ink     21.0:1   button labels. AAA
+   --border-strong on --card 5.3:1  form-control edges. Non-text, needs 3:1
+   NOTE: --muted is #525252, darker than the spec's #6b6b6b (5.1:1, AA only),
+   because this audience gets AAA body text. That is the floor clause, used.
+   ========================================================================== */
+
+:root {
+  /* ---- Color (spec frontmatter, sampled unless noted) ---- */
+  --canvas:       #f8f8f8;  /* the ground. Every band sits on it */
+  --card:         #ffffff;  /* the working surface */
+  --sand:         #e0dbcf;  /* wash bands: the offer, the closing CTA */
+
+  --ink:          #000000;  /* text AND the only action color */
+  --on-ink:       #ffffff;  /* text on ink surfaces */
+  --ink-soft:     #262626;  /* derived: button hover, one step off black */
+  --muted:        #525252;  /* derived for AAA, see header note */
+
+  --hairline:     #e8e8e8;  /* card borders, decorative only */
+  --border-strong:#6b6b6b;  /* form-control edges, 5.3:1 on card */
+
+  /* The closed six. Marks and chips ONLY: never a surface, a button,
+     or running text. One accent per element. The list does not grow. */
+  --accent-amber:  #fec500;
+  --accent-purple: #9556fa;
+  --accent-blue:   #6597f9;
+  --accent-green:  #50bb82;
+  --accent-coral:  #dd6b63;
+  --accent-teal:   #81d8d0;
+
+  /* ---- Type ---- */
+  /* One grotesque stack, weight does the differentiating. Inter Tight is an
+     approximation per the spec's Known Gaps; system-ui is the working
+     fallback so the page stays dependency-free (no webfont, no CDN). */
+  --sans: 'Inter Tight', 'Inter', system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --fs-base:   1.25rem;   /* 20px body — kept from v1, above the 18px floor */
+  --fs-sm:     1.0625rem; /* 17px fine print */
+  --fs-lg:     1.4375rem; /* 23px lead paragraphs */
+  --fs-h3:     1.5rem;
+  --fs-h2:     2rem;
+  --fs-h1:     2.5rem;    /* 40px at 390px; fluid up toward the spec's 52-56 */
+  --lh-body:   1.6;
+  --lh-tight:  1.1;
+
+  /* ---- Space & shape ---- */
+  --space:     1.25rem;
+  --gap:       3.5rem;    /* band rhythm at phone width; ~7rem wide */
+  --r-sm:      8px;
+  --r-md:      12px;
+  --r-xl:      24px;      /* cards and panels */
+  --r-pill:    9999px;    /* every button */
+  --maxw:      42rem;     /* ~660px reading column */
+  --tap:       56px;      /* min tap target, 55+ floor */
+  --shadow:    0 2px 12px rgba(0, 0, 0, .06);  /* ONE soft shadow, or a
+                                                  hairline. Never both. */
+}
+
+/* ---- Fluid sizes on wider screens ---- */
+@media (min-width: 40rem) {
+  :root { --fs-h1: 3.375rem; --fs-h2: 2.375rem; --fs-base: 1.3125rem;
+          --gap: 6rem; }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--sans);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  color: var(--ink);
+  margin: 0 0 .6em;
+  letter-spacing: -.02em;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); letter-spacing: -.01em; }
+
+p { margin: 0 0 1em; }
+strong { color: var(--ink); }
+
+a { color: var(--ink); }
+
+/* Visible focus for keyboard users everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* ==========================================================================
+   Layout — bands separate by whitespace and background shifts. NO rules.
+   ========================================================================== */
+.wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 1.25rem; }
+
+section { padding-block: var(--gap); }
+
+/* Wash band: --sand ground, used exactly twice per page like the source
+   (the offer panel and the closing CTA). Ink text on it reads 15.2:1. */
+.band-sand { background: var(--sand); }
+
+.lead { font-size: var(--fs-lg); color: var(--ink); }
+
+/* ==========================================================================
+   Highlight mark — the system's signature. A highlighter swash behind one
+   or two headline words. Accent as a MARK, never as a surface or text.
+   ========================================================================== */
+.mark {
+  background: linear-gradient(transparent 52%, var(--accent-amber) 52%, var(--accent-amber) 96%, transparent 96%);
+  padding-inline: .08em;
+}
+
+/* ==========================================================================
+   Buttons — ink pills, the single action pattern
+   ========================================================================== */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap);
+  padding: .9rem 2rem;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-family: var(--sans);
+  font-size: 1.3125rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease;
+}
+.btn:hover  { background: var(--ink-soft); }
+.btn:active { transform: translateY(1px); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+}
+.btn--ghost:hover { background: var(--card); }
+
+.btn-note { font-size: var(--fs-sm); color: var(--muted); margin-top: .75rem; text-align: center; }
+
+/* ==========================================================================
+   Chips — small accent labels, ink text, pill shape. One accent per element.
+   ========================================================================== */
+.badge {
+  display: inline-block;
+  background: var(--accent-amber);
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  padding: .35rem 1rem;
+  border-radius: var(--r-pill);
+  margin-bottom: 1.25rem;
+}
+
+/* ==========================================================================
+   Lists with check marks
+   ========================================================================== */
+.checks { list-style: none; margin: 0; padding: 0; }
+.checks li {
+  position: relative;
+  padding-left: 2.25rem;
+  margin-bottom: 1rem;
+}
+.checks li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .15em;
+  width: 1.5rem; height: 1.5rem;
+  background: var(--ink);
+  border-radius: 50%;
+  /* white check drawn with a mask so no images are needed */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9.6 16.2 5.4 12l-1.4 1.4 5.6 5.6L20.4 8.2 19 6.8z'/%3E%3C/svg%3E") center / 78% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9.6 16.2 5.4 12l-1.4 1.4 5.6 5.6L20.4 8.2 19 6.8z'/%3E%3C/svg%3E") center / 78% no-repeat;
+}
+
+/* plain bullet list (pain block, footer disclaimers) */
+.dots { padding-left: 1.4rem; }
+.dots li { margin-bottom: .9rem; }
+
+/* ==========================================================================
+   Cards, callouts, modules — card = hairline OR shadow, never both
+   ========================================================================== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 1.6rem 1.5rem;
+}
+
+.modules { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }
+.modules .num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.4rem; height: 2.4rem; flex: none;
+  background: var(--ink); color: var(--on-ink);
+  font-family: var(--sans); font-size: 1.25rem; font-weight: 700;
+  border-radius: 50%;
+}
+.modules li {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 1.4rem 1.4rem;
+}
+.modules h3 { margin: .1rem 0 .35rem; }
+.modules p  { margin: 0; color: var(--muted); }
+
+/* Safety callout: a lifted white card. The old ochre wash retired with v1;
+   emphasis now comes from the card lift and the copy, not a warning color. */
+.callout {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 1.5rem 1.5rem;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+.gift {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 1.6rem 1.5rem;
+}
+
+/* ==========================================================================
+   FAQ (always visible, no accordion — the 55+ "nothing hidden" floor)
+   ========================================================================== */
+.faq dt { font-weight: 700; color: var(--ink); margin-top: 1.4rem; }
+.faq dt:first-child { margin-top: 0; }
+.faq dd { margin: .35rem 0 0; color: var(--muted); }
+
+/* ==========================================================================
+   Email capture form
+   ========================================================================== */
+.capture { display: grid; gap: .9rem; }
+.capture label { font-weight: 700; }
+.capture input[type="email"] {
+  min-height: var(--tap);
+  padding: .8rem 1.1rem;
+  font-size: 1.25rem;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--r-md);
+}
+.capture input[type="email"]::placeholder { color: var(--muted); opacity: 1; }
+.capture input[type="email"]:focus { border-color: var(--ink); }
+
+/* ==========================================================================
+   Hero, price, founder
+   ========================================================================== */
+.hero { padding-top: 3rem; }
+.brand {
+  display: flex; align-items: center; gap: .6rem;
+  font-family: var(--sans); font-size: 1.5rem; font-weight: 700;
+  color: var(--ink); letter-spacing: -.01em; margin-bottom: 1.75rem;
+}
+.brand-mark { display: block; width: 44px; height: 44px; }
+.price { font-weight: 700; color: var(--ink); }
+
+/* Founder photo placeholder */
+.founder {
+  width: 128px; height: 128px; border-radius: 50%;
+  background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink); font-family: var(--sans); font-size: 2.5rem; font-weight: 700;
+  margin-bottom: 1.25rem; border: 1px solid var(--hairline);
+}
+
+/* ==========================================================================
+   Sticky mobile CTA bar
+   ========================================================================== */
+.sticky-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; align-items: center; gap: 1rem;
+  padding: .7rem 1rem;
+  background: rgba(248, 248, 248, .96);
+  border-top: 1px solid var(--hairline);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, .07);
+}
+.sticky-cta .price { font-size: var(--fs-sm); line-height: 1.25; }
+.sticky-cta .btn { flex: 1; min-height: var(--tap); font-size: 1.1875rem; padding: .7rem 1rem; }
+@media (min-width: 46rem) { .sticky-cta { display: none; } }
+body { padding-bottom: 5.5rem; }
+@media (min-width: 46rem) { body { padding-bottom: 0; } }
+
+/* ==========================================================================
+   Footer — sits on the canvas like every other band, muted, quiet
+   ========================================================================== */
+.foot { background: var(--canvas); }
+.foot .wrap { padding-block: 2.5rem; }
+.foot-brand { display: flex; align-items: center; gap: .6rem; }
+.foot-brand h2 { margin: 0; font-size: var(--fs-h3); }
+.foot p, .foot li { color: var(--muted); font-size: var(--fs-sm); }
+.foot a { color: var(--ink); }
+
+/* ==========================================================================
+   Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

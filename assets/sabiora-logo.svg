@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 88" role="img" aria-label="sabiora">
+  <!-- sabiora ink and amber, approved 2026-08-25. Lowercase throughout.
+     Colors are token values from sabiora-tokens.css, no new hex:
+     ink #000000 tile, on-ink #ffffff letterform (21:1),
+     accent-amber #fec500 book line (13.2:1 on ink).
+     The s is an outlined path, not a text element: no font dependency, so it
+     is identical on every machine. It is drawn, not scaled from the capital:
+     a lowercase s is wider and squatter (ratio 0.83 vs 0.66), and it is
+     rotationally symmetric about its own centre so the two bowls match.
+     The amber form is an open book reduced to one continuous Picasso-style
+     stroke: the base line where the two pages meet at the spine, arms sweeping
+     out clean with no hump. Rejected by render along the way: two-page forms
+     with a spine gap (not one stroke), deep V and chevron forms (read as a
+     checkmark), two-hump forms (read as a letter m), centre-up forms (read as
+     a moustache).
+     Do not write a double hyphen in these comments: it is illegal in XML and
+     silently breaks the whole file. -->
+  <!-- viewBox widened 320 to 352 so the tagline fits without dropping below
+       legibility. This lockup is not referenced by the landing page today. -->
+  <g transform="translate(4,12)">
+    <rect width="64" height="64" rx="15" fill="#000000"/>
+    <path d="M 41.5 20.3 C 40 16.9, 36.6 15, 32 15 C 26.6 15, 22.5 17.6, 22.5 20.8
+           C 22.5 23.7, 26 25.2, 32 27 C 38 28.8, 41.5 30.3, 41.5 33.2
+           C 41.5 36.4, 37.4 39, 32 39 C 27.4 39, 24 37.1, 22.5 33.7"
+          fill="none" stroke="#ffffff" stroke-width="6.5"
+          stroke-linecap="round" stroke-linejoin="round" />
+    <!-- open book, one continuous stroke: the base line where the two pages
+         meet at the spine. No lift, no humps. -->
+    <path d="M 20 47 C 24 47, 28 49.4, 32 52.4 C 36 49.4, 40 47, 44 47"
+          fill="none" stroke="#fec500" stroke-width="4.5"
+          stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <text x="84" y="49" font-family="'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="38" font-weight="700" fill="#000000" letter-spacing="-0.8">sabiora</text>
+  <text x="86" y="71" font-family="'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="12.5" font-weight="400" fill="#525252" letter-spacing="0.2">inteligencia artificial, en español claro</text>
+</svg>
