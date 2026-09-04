@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursos | sabiora</title>
+<meta name="description" content="Los cursos de sabiora: inteligencia artificial en español claro, en video corto, desde tu celular. Empieza por IA sin miedo.">
+<meta property="og:title" content="Cursos | sabiora">
+<meta property="og:description" content="Cursos en video cortos para usar la inteligencia artificial sin miedo. Desde tu celular, a tu ritmo.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://sabiora.com/cursos/">
+<meta property="og:image" content="https://sabiora.com/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="sabiora. Aprende a usar la inteligencia artificial. Sin miedo.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://sabiora.com/cursos/">
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/sabiora-tokens.css">
+<style>body { padding-bottom: 0; }</style>
+<style>
+  /* Card spacing: tighten badge-to-heading gap inside the catalog card. */
+  .card .badge{margin-bottom:.9rem}
+  .card h2{margin-top:0;font-size:var(--fs-h3)}
+</style>
+
+<!-- TRACKING. Copied from cursos/ia-sin-miedo (SABIORA_Sabiora-LandingPage_20260721_v1.html). Keep in sync with the course page: same IDs, same order. -->
+<!-- Google Analytics 4 -->
+<script>
+  // GA4 Measurement ID wired 2026-08-29 (property: Sabiora / sabiora.com).
+  window.SABIORA_GA4_ID = 'G-73W9GGWME9';
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-73W9GGWME9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', window.SABIORA_GA4_ID);
+</script>
+
+<!-- Meta Pixel -->
+<script>
+  // Meta Pixel ID wired 2026-08-29 (pixel "sabiora", Events Manager).
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2103218973738022');
+  fbq('track', 'PageView');
+</script>
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="brand" href="/" style="text-decoration:none">
+      <img class="brand-mark" src="/assets/sabiora-mark.svg" alt="" width="44" height="44">
+      <span>sabiora</span>
+    </a>
+    <h1>Cursos</h1>
+    <p class="lead">Cada curso enseña una cosa concreta, en video corto, desde tu celular. Empieza por el que te toca.</p>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap">
+    <div class="card">
+      <span class="badge">15 lecciones en video</span>
+      <h2>IA sin miedo</h2>
+      <p>Usa la inteligencia artificial sin tecnicismos y a tu ritmo. Tres módulos: empezar sin miedo, tu vida diaria y protegerte de fraudes.</p>
+      <a class="btn" href="/cursos/ia-sin-miedo/" data-event="cta_click_catalog_course">Ver el curso</a>
+      <p class="btn-note"><span class="price">Precio de lanzamiento 499 MXN.</span> Garantía de reembolso total.</p>
+    </div>
+    <p class="btn-note" style="text-align:left">Por ahora es el único curso. Los siguientes se anuncian aquí y por correo.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-brand">
+      <img class="brand-mark" src="/assets/sabiora-mark.svg" alt="" width="40" height="40">
+      <h2>sabiora</h2>
+    </div>
+    <p><a href="/privacidad.html">Aviso de privacidad</a> · <a href="/reembolsos.html">Política de reembolso</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Fire GA4 + Meta events. Copied from cursos/ia-sin-miedo
+  // (SABIORA_Sabiora-LandingPage_20260721_v1.html) lines 343-348.
+  function track(eventName) {
+    try { if (window.gtag) gtag('event', eventName); } catch (e) {}
+    try { if (window.fbq)  fbq('trackCustom', eventName); } catch (e) {}
+    // Mirror to console so the page can be verified before real IDs exist.
+    console.log('[sabiora] event:', eventName);
+  }
+
+  var links = document.querySelectorAll('[data-event]');
+  Array.prototype.forEach.call(links, function (el) {
+    el.addEventListener('click', function () {
+      track(el.getAttribute('data-event'));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

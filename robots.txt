@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sabiora.com/sitemap.xml
