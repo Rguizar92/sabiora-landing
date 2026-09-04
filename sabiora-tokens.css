@@ -287,6 +287,10 @@ section { padding-block: var(--gap); }
 }
 .capture input[type="email"]::placeholder { color: var(--muted); opacity: 1; }
 .capture input[type="email"]:focus { border-color: var(--ink); }
+/* Consent checkbox, added 2026-09-03 (Brevo AUP section C). */
+.capture .consent { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; font-size: var(--fs-sm); color: var(--ink); cursor: pointer; }
+.capture .consent input { width: 1.25rem; height: 1.25rem; margin: .15rem 0 0; flex: 0 0 auto; accent-color: var(--ink); }
+.capture .consent a { color: var(--ink); }
 
 /* ==========================================================================
    Hero, price, founder

@@ -269,6 +269,14 @@
       <input type="email" id="email" name="email" autocomplete="email"
              placeholder="nombre@correo.com" required inputmode="email"
              aria-describedby="capture-msg">
+      <!-- Consent checkbox added 2026-09-03. Brevo Acceptable Use Policy section C:
+           consent must be an unchecked box, explicit about what arrives. Value is sent
+           to Brevo as OPT_IN so the proof of opt-in lives on the contact. -->
+      <label class="consent" for="consent">
+        <input type="checkbox" id="consent" name="consent" value="1" required>
+        <span>Sí, quiero recibir la Guía de Seguridad Digital y correos de sabiora sobre el curso.
+          Puedo darme de baja cuando quiera. <a href="/privacidad.html">Aviso de privacidad</a></span>
+      </label>
       <button type="submit" class="btn">Enviar mi guía</button>
     </form>
     <p class="btn-note" id="capture-msg" role="status" aria-live="polite"></p>
@@ -373,6 +381,14 @@
         return;
       }
       input.removeAttribute('aria-invalid');
+      var consent = document.getElementById('consent');
+      if (!consent.checked) {
+        consent.setAttribute('aria-invalid', 'true');
+        msg.textContent = 'Por favor marca la casilla para recibir la guía.';
+        consent.focus();
+        return;
+      }
+      consent.removeAttribute('aria-invalid');
       track('email_capture');
       // Brevo subscription endpoint, wired 2026-08-29. Form "Guia Seguridad
       // Digital capture", list "Sabiora non-buyers" (#3). ?isAjax=1 returns
@@ -380,6 +396,7 @@
       var BREVO_ACTION = 'https://891b84a2.sibforms.com/serve/MUIFALqpN5MfMqknCQtdnXbXIEvG6G8ZG8spXIQLI_7czlUtHWXDeobNq63a_6yRMdoyC-ye9tJyuKu5OLjcH8RtdjWHdqhQlFywm5dVJqvTCuO993UKFl51d6LC_iZNnBnERv_dc8PP7lKKxoE1GBjFVJLGiCP8VBHwkr4I4pyAk6dy-aQIkZT2xu_bWyskr5Ar9XOgXqe20xTFoQ==';
       var data = new FormData();
       data.append('EMAIL', email);
+      data.append('OPT_IN', '1');
       data.append('email_address_check', '');
       data.append('locale', 'es');
       msg.textContent = 'Enviando…';
