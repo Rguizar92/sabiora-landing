@@ -30,34 +30,19 @@
   .card h3 { margin-top: 0; }
 </style>
 
-<!-- TRACKING. Copied from cursos/ia-sin-miedo (SABIORA_Sabiora-LandingPage_20260721_v1.html). Keep in sync with the course page: same IDs, same order. -->
-<!-- Google Analytics 4 -->
-<script>
-  // GA4 Measurement ID wired 2026-08-29 (property: Sabiora / sabiora.com).
-  window.SABIORA_GA4_ID = 'G-73W9GGWME9';
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-73W9GGWME9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', window.SABIORA_GA4_ID);
-</script>
-
-<!-- Meta Pixel -->
-<script>
-  // Meta Pixel ID wired 2026-08-29 (pixel "sabiora", Events Manager).
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-  document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '2103218973738022');
-  fbq('track', 'PageView');
-</script>
+<!-- TRACKING. One Tag Manager container carries GA4, Meta Pixel and the Google Ads tag.
+     IDs live in the container, not in this file. Container ID written 2026-09-06. -->
+<script>window.dataLayer = window.dataLayer || [];</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WS6L7P23');</script>
 </head>
 
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WS6L7P23"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ============================================================
      HERO
@@ -87,7 +72,7 @@
       <span class="badge">15 lecciones en video</span>
       <h3>IA sin miedo</h3>
       <p>Aprende a usar la inteligencia artificial sin tecnicismos y a tu ritmo, con una guía imprimible por lección. Para mujeres que quieren entender la IA de una vez por todas.</p>
-      <a class="btn" href="/cursos/ia-sin-miedo/" data-event="cta_click_home_course">Ver el curso</a>
+      <a class="btn" href="/cursos/ia-sin-miedo/" data-event="cta_click_home_course" data-placement="home-hero">Ver el curso</a>
       <p class="btn-note"><span class="price">Precio de lanzamiento 499 MXN.</span> Garantía de reembolso total.</p>
     </div>
   </div>
@@ -163,19 +148,18 @@
 (function () {
   'use strict';
 
-  // Fire GA4 + Meta events.
-  function track(eventName) {
-    try { if (window.gtag) gtag('event', eventName); } catch (e) {}
-    try { if (window.fbq)  fbq('trackCustom', eventName); } catch (e) {}
-    // Mirror to console so the page can be verified before real IDs exist.
-    console.log('[sabiora] event:', eventName);
+  // Push one event to the data layer; Tag Manager fans it out to GA4 and Meta.
+  function track(eventName, placement) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, cta_placement: placement || 'none' });
+    console.log('[sabiora] event:', eventName, placement || 'none');
   }
 
   // Course card CTA.
   var courseBtn = document.querySelector('[data-event="cta_click_home_course"]');
   if (courseBtn) {
     courseBtn.addEventListener('click', function () {
-      track(courseBtn.getAttribute('data-event'));
+      track(courseBtn.getAttribute('data-event'), courseBtn.getAttribute('data-placement') || 'none');
     });
   }
 
@@ -202,7 +186,7 @@
         return;
       }
       consent.removeAttribute('aria-invalid');
-      track('email_capture');
+      track('email_capture', 'home-capture');
       // Brevo subscription endpoint, wired 2026-08-29. Form "Guia Seguridad
       // Digital capture", list "Sabiora non-buyers" (#3). ?isAjax=1 returns
       // JSON with CORS, same mechanism Brevo's own embed script uses.

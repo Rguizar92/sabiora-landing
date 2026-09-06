@@ -20,36 +20,19 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/sabiora-tokens.css">
 
-<!-- ============================================================
-     TRACKING  —  paste real IDs before go-live (see swap list)
-     ============================================================ -->
-<!-- Google Analytics 4 -->
-<script>
-  // GA4 Measurement ID wired 2026-08-29 (property: Sabiora / sabiora.com).
-  window.SABIORA_GA4_ID = 'G-73W9GGWME9';
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-73W9GGWME9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', window.SABIORA_GA4_ID);
-</script>
-
-<!-- Meta Pixel -->
-<script>
-  // Meta Pixel ID wired 2026-08-29 (pixel "sabiora", Events Manager).
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-  document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '2103218973738022');
-  fbq('track', 'PageView');
-</script>
+<!-- TRACKING. One Tag Manager container carries GA4, Meta Pixel and the Google Ads tag.
+     IDs live in the container, not in this file. Container ID written 2026-09-06. -->
+<script>window.dataLayer = window.dataLayer || [];</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WS6L7P23');</script>
 </head>
 
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WS6L7P23"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ============================================================
      HERO
@@ -70,7 +53,7 @@
     <p class="lead">Curso en video de 15 lecciones cortas, pensado para mujeres que quieren
       entender la IA de una vez por todas. Desde tu celular, a tu paso, con guías imprimibles.</p>
 
-    <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero">Quiero mi curso</a>
+    <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero" data-placement="hero">Quiero mi curso</a>
     <p class="btn-note">
       <span class="price">Precio de lanzamiento 499 MXN.</span>
       Sube a 999 MXN el 15 de octubre. Garantía de reembolso total.
@@ -187,7 +170,7 @@
       <h2>¿Es para tu mamá?</h2>
       <p>Regálale confianza, no otro aparato. Compra el curso a su nombre y recibe una tarjeta digital
         para dárselo. Ella aprende a su ritmo y tú dejas de ser soporte técnico de tiempo completo.</p>
-      <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout="gift" data-event="cta_click_gift">Regalar el curso</a>
+      <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout="gift" data-event="cta_click_gift" data-placement="gift">Regalar el curso</a>
     </div>
   </div>
 </section>
@@ -217,7 +200,7 @@
     <h2>Compra sin riesgo</h2>
     <p>Si el curso no es para ti, te devolvemos el 100 por ciento, sin preguntas, hasta 14 días después
       de tu compra. Escribes un correo y listo.</p>
-    <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero">Quiero mi curso</a>
+    <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero" data-placement="closer">Quiero mi curso</a>
     <p class="btn-note"><span class="price">Precio de lanzamiento 499 MXN.</span> Sube a 999 MXN el 15 de octubre.</p>
   </div>
 </section>
@@ -308,7 +291,7 @@
      ============================================================ -->
 <div class="sticky-cta" role="complementary" aria-label="Comprar el curso">
   <span class="price">Lanzamiento<br>499 MXN</span>
-  <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero">Quiero mi curso</a>
+  <a class="btn" href="https://pay.hotmart.com/N107387737C?off=5m14s2xq" data-checkout data-event="cta_click_hero" data-placement="sticky">Quiero mi curso</a>
 </div>
 
 <!-- ============================================================
@@ -347,12 +330,11 @@
     return url.toString();
   }
 
-  // Fire GA4 + Meta events, then continue to checkout.
-  function track(eventName) {
-    try { if (window.gtag) gtag('event', eventName); } catch (e) {}
-    try { if (window.fbq)  fbq('trackCustom', eventName); } catch (e) {}
-    // Mirror to console so the page can be verified before real IDs exist.
-    console.log('[sabiora] event:', eventName);
+  // Push one event to the data layer; Tag Manager fans it out to GA4 and Meta.
+  function track(eventName, placement) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, cta_placement: placement || 'none' });
+    console.log('[sabiora] event:', eventName, placement || 'none');
   }
 
   // Enhance every checkout button: keep its real href, just append UTMs, and
@@ -362,7 +344,7 @@
     var base = btn.getAttribute('href');
     if (base && base !== '#') { btn.setAttribute('href', withUtms(base)); }
     btn.addEventListener('click', function () {
-      track(btn.getAttribute('data-event') || 'cta_click');
+      track(btn.getAttribute('data-event') || 'cta_click', btn.getAttribute('data-placement') || 'none');
     });
   });
 
@@ -389,7 +371,7 @@
         return;
       }
       consent.removeAttribute('aria-invalid');
-      track('email_capture');
+      track('email_capture', 'capture-form');
       // Brevo subscription endpoint, wired 2026-08-29. Form "Guia Seguridad
       // Digital capture", list "Sabiora non-buyers" (#3). ?isAjax=1 returns
       // JSON with CORS, same mechanism Brevo's own embed script uses.
